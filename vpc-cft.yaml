@@ -1,0 +1,43 @@
+Resources:
+  mytestvpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 192.168.0.0/16
+  mytestSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref mytestvpc
+      AvailabilityZone: us-east-1a
+      CidrBlock: 192.168.1.0/24
+  myRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref mytestvpc
+  mytestSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref mytestvpc
+      AvailabilityZone: us-east-1b
+      CidrBlock: 192.168.2.0/24
+  SubnetRouteTableAssociationA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref myRouteTable
+      SubnetId: !Ref mytestSubnetA
+  SubnetRouteTableAssociationB:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref myRouteTable
+      SubnetId: !Ref mytestSubnetB
+  igw:
+    Type: AWS::EC2::InternetGateway
+  GatewayRouteTableAssociation:
+    Type: AWS::EC2::GatewayRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref myRouteTable
+      GatewayId: !Ref igw
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref mytestvpc
+      InternetGatewayId: !Ref  igw
