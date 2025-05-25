@@ -1,0 +1,468 @@
+What is cloud computing?
+
+-->What is datacenter?
+
+Hardware resources (Compute,storage,networking)
+
+They will host their software/application
+
+
+--->2000-->
+
+amazon and VMware
+
+VMware-->Creating datacenter in premises and provide access over the browser
+
+aws--> Datacenter across the world to the other organization
+
+
+DC-->across world, using the browser
+
+You will be using the service--Hardware 
+
+
+----------------------
+Cloud computing is an enablement of services which we want to use to run our application or software.
+
+IAAS : Infra as a service
+PAAS : Platform as a service
+SAAS: software as a service
+
+computing: cpu + memory
+
+storage
+
+Networking
+
+---------------
+
+AWS-->Loan that hardware resources in form services
+
+
+Service-->configuration and design of the aws services
+
+
+ABC-->has its own dc-->which is in India (Mumbai location)
+
+500 servers
+
+Lot of approvals,
+
+
+Cloud computing
+
+
+DC-->AWS location
+
+
+
+Pay as you go model--
+
+
+DB/Containerizaiton
+
+mysql-->enterprise -->Replication (Service model)
+
+
+
+aws  services
+
+
+MySQL service (Configuration)
+------------------------------------
+
+Regions--> AWS dc location
+
+Location-->you can have two or more than two DC (zones)
+
+
+Client-->Location constraint (Bank)--> RBI guideline (finance, defence, phrama)
+
+
+Region --> Mumbai-->two zones available
+
+Nearest location from where your cusumers will be accessing
+
+-----
+
+
+Lease line provided to access the cloud (AWS direct connect)
+
+-------------
+
+AWS cloud--->
+
+xyz --->persone1
+
+abc-->person2
+
+aws region-->zone
+
+
+
+
+--->DC--mumbai--->		 (VPC), xyz (VPC)
+
+
+
+10.0.0.0/24 (VPC) :256
+
+10.0.0.0/24
+
+10.0.0.0/28
+
+
+
+
+
+11111111.1111111.1111111.11100000
+
+
+
+
+
+
+Route table
+
+-->internet gateway
+
+
+
+-
+------------------------
+
+AWS cloud-->Public cloud provider (DC)
+
+VPC-->Logical Datacenter (Pragmatically they are controlling the stuff)
+
+
+DC-->across globe-->Regions
+
+
+Availbility zones: HA(Redundancy)
+
+
+--------------
+
+Private subnet vs public subnet
+
+
+Prod-->webserver (public subnet) two network adapter
+
+database
+
+database-->(private subnet
+
+
+AWS direct connect (Lease line)
+
+VM-->webserver-->public subnet (Jump server)
+	-->private subnet
+
+DB-->private subnet
+
+-------------------
+
+My EC2 instance has public ip, still i am not able to access it over the internet? why?
+
+22?
+
+IGW--?
+
+
+
+EC2? IAAS layer
+
+Create vm-->DB(installing yourself)-->Take care db, issue occur db,upgrade
+
+I need DB--> Mysql-->Version-->connection string: No installation , no mantainance
+
+IAAS-->Consumer ownership/control, SME
+
+VM-->application /upgrade, you will be less amount aws
+
+PAAS
+
+SAAS-->don't need aws sme,
+----------------------------------
+VM?
+
+Ec2-->
+----
+
+Purchased hardware--->Virtualization  os (Xenserver)-->ec2 instance
+
+
+Ec2-->Elastic cloud computing-->
+
+
+VM-->Simpulation of virtual h/w--> cpu,memory,h/d,network created using virualization
+
+22
+
+-----------
+
+SSH based authentication
+
+basic auth--> username/password (Highly discouraged)
+
+ssh authentication
+
+Keypair-->public key/private key
+
+
+
+ssh-->encrypted packet to the remote address..public key decrypt
+
+RSA/ED25519
+
+
+ppk..
+
+
+putty/mobaxterme-->to connect Linux os remotely
+
+
+
+-------------
+
+MYSQL DB
+
+
+--------------
+
+
+
+
+
+VM-->webserver-->Configuration-->Own blueprint for the new instance
+ Readonly blueprint of yourvm
+
+Vm-->
+
+SET OF FILES	-->hd/memory (swap file)
+
+---------------
+
+
+
+
+--->traffic load balance--->target (VM) running out of resource + 1vm+1vm
+
+-----------------------
+Horizontal scaling (1--->10)
+
+
+
+irctc/hotstar/upi
+
+10am
+
+irctc.com (Webserver)-->homepage
+
+before 10am
+
+after 12pm
+
+100time
+
+
+irctc.com--->LB--->webserver(spike happens in webserver) > 80% + webserver +web+web
+
+
+
+initiate--LB--->VM(ip)
+
+
+
+sourceip destinationip-->NAT
+
+
+egress	
+
+
+
+Link:
+
+https://github.com/amitopenwriteup/aws-lab-staragile
+
+https://coderepublics.com/blog/internet/what-is-osi-model-7-layers-explained/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
