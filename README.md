@@ -96,6 +96,3 @@ It is a collection of **labs, presentations, and guides** covering both fundamen
 ✉️ [amit@openwriteup.com](mailto:amit@openwriteup.com)
 
 ```
-
-👉 Do you want me to make **one unified README across all your repos** (AWS, GCP, Kubernetes, ArgoCD, Compliance) so it looks like a **portfolio repo**, or should each repo keep a **separate service-specific README** like this one?
-```
