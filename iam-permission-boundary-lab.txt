@@ -1,0 +1,120 @@
+AWS IAM PERMISSION BOUNDARY LAB - CONSOLE STEPS (PLAIN TEXT)
+
+STEP 1 - CREATE THE PERMISSION BOUNDARY POLICY
+
+1. Go to IAM Console, click Policies in left sidebar, click Create policy
+2. Click the JSON tab and paste this:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowLimitedServices",
+      "Effect": "Allow",
+      "Action": [
+        "s3:*",
+        "logs:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+3. Click Next
+4. Policy name: LabPermissionBoundary
+5. Description: Boundary limiting identities to S3 and CloudWatch Logs
+6. Click Create policy
+
+
+STEP 2 - CREATE THE ROLE WITH THE BOUNDARY ATTACHED
+
+1. Go to IAM, click Roles, click Create role
+2. Trusted entity type: AWS account, select This account
+3. Click Next
+4. On Add permissions page, skip attaching any policy for now, click Next
+5. Role name: LabTestRole
+6. Scroll down to Permissions boundary section, click Set permissions boundary
+7. Search for LabPermissionBoundary, select it
+8. Click Create role
+
+Note: you can also set or change the boundary later from the role's Permissions tab under the Permissions boundary section.
+
+
+STEP 3 - ATTACH AN OVER PRIVILEGED POLICY (to simulate the risk)
+
+1. Open the role LabTestRole
+2. Go to Permissions tab, click Add permissions, click Attach policies
+3. Search for AdministratorAccess, check it, click Add permissions
+
+Now the role's identity policy says full admin, but the boundary will still cap it.
+
+
+STEP 4 - VERIFY THE BOUNDARY IS ATTACHED
+
+1. On the role's Permissions tab, look for Permissions boundary section near the top
+2. Confirm it shows LabPermissionBoundary
+
+
+STEP 5 - TEST WITH IAM POLICY SIMULATOR
+
+1. Open the IAM Policy Simulator at policysim.aws.amazon.com
+2. Under Users, Groups, and Roles, select Roles
+3. Choose LabTestRole
+4. In the service and action list select:
+   EC2 - RunInstances
+   S3 - PutObject
+   CloudWatch Logs - CreateLogGroup
+5. Click Run Simulation
+
+Expected results:
+
+ec2:RunInstances = Denied. Reason: AdministratorAccess allows it but the boundary does not include EC2, so it gets capped.
+
+s3:PutObject = Allowed. Reason: both identity policy and boundary allow S3.
+
+logs:CreateLogGroup = Allowed. Reason: both identity policy and boundary allow Logs.
+
+This proves the role has AdministratorAccess attached but is still capped to only S3 and Logs actions.
+
+
+STEP 6 (OPTIONAL) - REQUIRE BOUNDARY ON ROLE OR USER CREATION
+
+1. Go to IAM, click Policies, click Create policy, JSON tab, paste this:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "RequireBoundaryOnCreate",
+      "Effect": "Deny",
+      "Action": ["iam:CreateUser", "iam:CreateRole"],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "iam:PermissionsBoundary": "arn:aws:iam::YOUR_ACCOUNT_ID:policy/LabPermissionBoundary"
+        }
+      }
+    },
+    {
+      "Sid": "DenyBoundaryDeletion",
+      "Effect": "Deny",
+      "Action": ["iam:DeleteUserPermissionsBoundary", "iam:DeleteRolePermissionsBoundary"],
+      "Resource": "*"
+    }
+  ]
+}
+
+2. Name it EnforceBoundaryPolicy, create it
+3. Attach this to a delegated admin IAM user or group who is allowed to create roles. They will now be forced to include the boundary or their CreateRole and CreateUser calls will fail.
+
+
+CLEANUP STEPS
+
+1. Open role LabTestRole, Permissions tab, detach AdministratorAccess
+2. Go to IAM, Roles, select LabTestRole, click Delete
+3. Go to IAM, Policies, select LabPermissionBoundary, click Actions, click Delete
+4. If created, delete EnforceBoundaryPolicy the same way
+
+
+QUICK NOTE
+The console is good for seeing the boundary UI and running the simulator visually. For enforcing this across many users at once in real environments, CLI, Terraform, or CloudFormation is usually faster.
